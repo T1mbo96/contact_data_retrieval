@@ -29,7 +29,7 @@ class DataLoader:
         if not os.path.exists(path):
             raise FileNotFoundError(path)
 
-        self.__path: str = path
+        self._path: str = path
 
     def load_raw_data(self) -> List[Dict[str, Any]]:
         """
@@ -68,7 +68,7 @@ class DataLoader:
 
     @property
     def path(self) -> str:
-        return self.__path
+        return self._path
 
     def __str__(self):
         return f'<DataLoader of {self.path}>'

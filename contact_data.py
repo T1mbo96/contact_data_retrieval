@@ -20,31 +20,31 @@ class ContactData:
         :param data: Dictionary of the loaded contact data for a website.
         """
 
-        self.__country_code = data['country_code']
-        self.__raw_input = data['raw_input']
-        self.__fixed_input = data['fixed_input']
-        self.__crawled_imprint = data['crawled_imprint']
-        self.__crawled_website = data['crawled_website']
+        self._country_code = data['country_code']
+        self._raw_input = data['raw_input']
+        self._fixed_input = data['fixed_input']
+        self._crawled_imprint = data['crawled_imprint']
+        self._crawled_website = data['crawled_website']
 
     @property
     def country_code(self):
-        return self.__country_code
+        return self._country_code
 
     @property
     def raw_input(self):
-        return self.__raw_input
+        return self._raw_input
 
     @property
     def fixed_input(self):
-        return self.__fixed_input
+        return self._fixed_input
 
     @property
     def crawled_imprint(self):
-        return self.__crawled_imprint
+        return self._crawled_imprint
 
     @property
     def crawled_website(self):
-        return self.__crawled_website
+        return self._crawled_website
 
     def __str__(self):
         return f'<ContactData of {self.crawled_website}>'

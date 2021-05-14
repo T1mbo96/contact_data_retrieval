@@ -31,39 +31,19 @@ class NaturalLanguageProcessingUtils:
         :param data_loader: DataLoader of the contact data json file.
         """
 
-        self.__file: str = data_loader.path
-        self.__raw_data: List[Dict[str, Any]] = data_loader.load_raw_data()
-        self.__cleansed_data: List[ContactData] = data_loader.load_cleansed_data()
+        self._file: str = data_loader.path
+        self._raw_data: List[Dict[str, Any]] = data_loader.load_raw_data()
+        self._cleansed_data: List[ContactData] = data_loader.load_cleansed_data()
 
-    def get_country_code(self, index: int) -> str:
+    def contact_data(self, index: int) -> ContactData:
         """
-        Retrieve the country code of the contact data.
+        Retrieve the contact data with the specified index.
 
         :param index: Index of the specified contact data.
-        :return: The country code.
+        :return: The contact data.
         """
 
-        return self.cleansed_data[index].country_code
-
-    def get_crawled_website(self, index: int) -> str:
-        """
-        Retrieve the url of the crawled website.
-
-        :param index: Index of the specified contact data.
-        :return: The url of the website.
-        """
-
-        return self.cleansed_data[index].crawled_website
-
-    def get_actual_value(self, index: int) -> str:
-        """
-        Retrieve the desired representation of the contact data.
-
-        :param index: Index of the specified contact data.
-        :return: The desired representation of the contact data
-        """
-
-        return self.cleansed_data[index].fixed_input
+        return self.cleansed_data[index]
 
     def prettify_html(self, index: int) -> str:
         """
@@ -125,15 +105,15 @@ class NaturalLanguageProcessingUtils:
 
     @property
     def file(self) -> str:
-        return self.__file
+        return self._file
 
     @property
     def raw_data(self) -> List[Dict[str, Any]]:
-        return self.__raw_data
+        return self._raw_data
 
     @property
     def cleansed_data(self) -> List[ContactData]:
-        return self.__cleansed_data
+        return self._cleansed_data
 
     def __str__(self):
         return f'<NLP of {self.file}>'
