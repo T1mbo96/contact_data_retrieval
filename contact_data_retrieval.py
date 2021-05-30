@@ -5,13 +5,13 @@ from contact_data import ContactData
 from data_loader import DataLoader
 from extractors.terms.arbitrary_position_extractors import ArbitraryPositionExtractor
 from extractors.terms.standalone_extractors import StandaloneExtractor
-from natural_language_processing_utils import NaturalLanguageProcessingUtils
+from pre_processing import PreProcessing
 from language_settings import PIPELINES, DICTIONARIES
 from abstract_classes.contact_data_retrieval_tasks import ContactDataRetrievalTask, \
     CountrySpecificContactDataRetrievalTask, NamedEntityRecognitionContactDataRetrievalTask
 
 
-class ContactDataRetrieval(NaturalLanguageProcessingUtils):
+class ContactDataRetrieval(PreProcessing):
     def __init__(self, contact_data: ContactData, pipeline: List[Type[ContactDataRetrievalTask]] = None):
         # Initialize superclass
         super().__init__(contact_data=contact_data)
@@ -30,12 +30,14 @@ class ContactDataRetrieval(NaturalLanguageProcessingUtils):
         matched_lines: Dict[int, str] = {}
         settings: Dict[str, Any] = DICTIONARIES[self.contact_data.country_code]
         lines: Dict[int, str] = {index: line.replace(u'\xa0', u' ') for index, line in enumerate(self.split_lines())}
+        print(lines)
 
         for task in self.pipeline:
             if issubclass(task, PreProcessingTask):
                 extractor: PreProcessingTask = task(terms=settings['avoid'], lines=lines)
 
                 lines = extractor.extract_relevant_lines()
+                print(lines)
             else:
                 if issubclass(task, CountrySpecificContactDataRetrievalTask):
                     extractor: ContactDataRetrievalTask = task(country_code=self.contact_data.country_code)
@@ -73,8 +75,8 @@ class ContactDataRetrieval(NaturalLanguageProcessingUtils):
 
 
 if __name__ == '__main__':
-    dl = DataLoader('C:/Users/TimoM/PycharmProjects/ner/data/imprints_plausible.json')
-    cdr = ContactDataRetrieval(contact_data=dl.contact_data(index=0))
+    dl = DataLoader('C:/Users/TimoM/PycharmProjects/contact_data_retrieval/data/imprints_plausible_v2.json')
+    cdr = ContactDataRetrieval(contact_data=dl.contact_data(index=1200))
     cdr.output()
 
     # TODO: Compare Swift to database

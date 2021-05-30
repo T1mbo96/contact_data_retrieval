@@ -8,7 +8,7 @@ from contact_data import ContactData
 from data_loader import DataLoader
 
 
-class NaturalLanguageProcessingUtils:
+class PreProcessing:
     """
     This is a class of util functions for natural language processing tasks on the web scraped contact data.
 
@@ -82,10 +82,3 @@ class NaturalLanguageProcessingUtils:
 
     def __str__(self):
         return f'<NLP of {self.contact_data}>'
-
-
-if __name__ == '__main__':
-    dl = DataLoader(path='C:/Users/TimoM/PycharmProjects/ner/data/imprints_plausible.json')
-    nlp = NaturalLanguageProcessingUtils(data_loader=dl)
-
-    print(nlp.remove_html(3))

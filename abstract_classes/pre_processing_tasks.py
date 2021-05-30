@@ -12,7 +12,6 @@ class PreProcessingTask(ABC):
         """
         Instantiates an object of the class deriving from this abstract class.
 
-        :param terms: Terms that should be avoided.
         :param lines: Lines of the contact data.
         """
 
