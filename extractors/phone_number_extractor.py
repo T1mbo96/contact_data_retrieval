@@ -1,7 +1,9 @@
+import re
+
 from typing import Dict, List, Any
 from phonenumbers import PhoneNumberMatcher, PhoneNumberFormat, number_type, format_number
 
-from extracting_tasks import ExtractingTask
+from extractors.extracting_tasks import ExtractingTask
 
 
 class PhoneNumberExtractor(ExtractingTask):
@@ -9,6 +11,7 @@ class PhoneNumberExtractor(ExtractingTask):
         0: 'phone',
         1: 'mobile',
         2: 'phone',
+        3: 'fax'
     }
 
     def __init__(self, lines: Dict[int, str], country_code: str = None):
@@ -16,20 +19,28 @@ class PhoneNumberExtractor(ExtractingTask):
         self._lines: Dict[int, str] = lines
         self._extracted: List[Dict[str, Any]] = self._extract()
 
+        print(lines)
+
     def _extract(self) -> List[Dict[str, Any]]:
-        phone_numbers: List[Dict[str, Any]] = []
+        extracted: List[Dict[str, Any]] = []
 
         for line_index, line in self.lines.items():
             for match in PhoneNumberMatcher(line, self.country_code):
                 phone_number_type: int = number_type(match.number)
-                # TODO: distinct between fax and phone
-                phone_numbers.append({
+                print(match.raw_string)
+
+                if 'fax' in re.search(r'[^\d]*?' + match.raw_string.replace('+', '\+'), line).group(0).lower():
+                    phone_number_type = 3
+
+                extracted.append({
                     'type': self.type_mappings[phone_number_type] if phone_number_type in self.type_mappings else self.type_mappings[0],
                     'match': format_number(match.number, PhoneNumberFormat.E164),
                     'index': line_index
                 })
 
-        return phone_numbers
+        print(f'Phone numbers: {extracted}')
+
+        return extracted
 
     @property
     def country_code(self):
@@ -45,5 +56,6 @@ class PhoneNumberExtractor(ExtractingTask):
 
 
 if __name__ == '__main__':
-    pne = PhoneNumberExtractor({1: 'adw 09331 87400, 08 06 32, 77694 Kehl. Fax: 09331 874044'}, 'DE')
+    pne = PhoneNumberExtractor({1: 'Telefon: +49 40 500250', 2: 'Telefax: +49 40 50025111', 3: 'Telefon: +49 40 500250, Telefax: +49 40 50025111'}, 'DE')
     print(pne.extracted)
+    print(re.sub(r'(?<=\d)\s*(?=\d)', '', 'Telefon: +49 40 500250, Telefax: +49 40 50025111'))

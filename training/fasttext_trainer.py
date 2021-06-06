@@ -69,12 +69,7 @@ class FasttextTrainer:
     def _save_classifier(self):
         logging.info(f'Start saving {str(self.classifier)}.')
 
-        try:
-            os.makedirs(f'../classifiers/{date.today()}/fasttext', exist_ok=True)
-        except FileExistsError:
-            logging.info(f'Folder {date.today()} in classifiers already exists. Skipping.')
-
-        self.classifier.save_model(f'../classifiers/{date.today()}/fasttext/{self.accuracy}.bin')
+        self.classifier.save_model(f'{self.accuracy}.bin')
 
         logging.info(f'End saving {str(self.classifier)}.')
 
@@ -116,5 +111,5 @@ class FasttextTrainer:
 
 
 if __name__ == '__main__':
-    dl = DataLoader('C:/Users/TimoM/PycharmProjects/contact_data_retrieval/data/imprints_plausible_v2.json')
+    dl = DataLoader('../data/imprints_plausible_v2.json')
     ftt = FasttextTrainer(data_loader=dl, languages=('DE',))

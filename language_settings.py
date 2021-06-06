@@ -4,7 +4,7 @@ from extractors.bank_data.iban_extractors import RegExIBANExtractor
 from extractors.bank_data.swift_bic_extractors import RegExSWIFTBICExtractor
 from extractors.bank_data.uid_number_extractors import RegExUIDNumberExtractor
 from extractors.mail_addresses.mail_address_extractors import RegExMailAddressExtractor
-from extractors.named_entity_recognition.ner_extractors import HuggingFaceTransformersExtractor
+# from extractors.named_entity_recognition.ner_extractors import HuggingFaceTransformersExtractor
 from extractors.phone_numbers.phone_number_extractors import LibPhoneNumberExtractor
 from extractors.terms.arbitrary_position_extractors import ArbitraryPositionExtractor
 from extractors.relevant_lines.relevant_lines_extractors import TFIDFLogisticRegressionExtractor, FasttextExtractor, \
@@ -27,10 +27,10 @@ DICTIONARIES = {
                 'konto'
             ]
         },
-        'named_entity_recognition': {
-            'model': 'xlm-roberta-large-finetuned-conll03-german',
-            'tokenizer': 'xlm-roberta-large-finetuned-conll03-german'
-        }
+        #'named_entity_recognition': {
+        #    'model': 'xlm-roberta-large-finetuned-conll03-german',
+        #    'tokenizer': 'xlm-roberta-large-finetuned-conll03-german'
+        #}
     },
     'DE': {
         'avoid': [
@@ -45,10 +45,10 @@ DICTIONARIES = {
                 'konto'
             ]
         },
-        'named_entity_recognition': {
-            'model': 'xlm-roberta-large-finetuned-conll03-german',
-            'tokenizer': 'xlm-roberta-large-finetuned-conll03-german'
-        }
+        #'named_entity_recognition': {
+        #    'model': 'xlm-roberta-large-finetuned-conll03-german',
+        #    'tokenizer': 'xlm-roberta-large-finetuned-conll03-german'
+        #}
     }
 }
 
@@ -57,12 +57,12 @@ PIPELINES = {
     'AT': [
         DictionaryRelevantLinesExtractor, LibPhoneNumberExtractor, RegExMailAddressExtractor, RegExURLExtractor,
         RegExIBANExtractor, RegExSWIFTBICExtractor, RegExCompanyRegistrationNumberExtractor, RegExUIDNumberExtractor,
-        RegExDVRNumberExtractor, StandaloneExtractor, ArbitraryPositionExtractor, HuggingFaceTransformersExtractor
+        RegExDVRNumberExtractor, StandaloneExtractor, ArbitraryPositionExtractor
     ],
     'DE': [
         DictionaryRelevantLinesExtractor, LibPhoneNumberExtractor, RegExMailAddressExtractor, RegExURLExtractor,
         RegExIBANExtractor, RegExSWIFTBICExtractor, RegExCompanyRegistrationNumberExtractor, RegExUIDNumberExtractor,
-        RegExDVRNumberExtractor, StandaloneExtractor, ArbitraryPositionExtractor, HuggingFaceTransformersExtractor
+        RegExDVRNumberExtractor, StandaloneExtractor, ArbitraryPositionExtractor
     ],
 }
 

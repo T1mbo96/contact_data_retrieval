@@ -112,7 +112,7 @@ class DataLoader:
             if contact_data.line_annotations and contact_data.country_code in languages:
                 for line in contact_data.line_annotations:
                     if 'text' in line and 'blockId' in line:
-                        data.append({'line': line['text'], 'is_misleading': True if line['isMisleading'] is True else False})
+                        data.append({'line': line['text'], 'is_misleading': True if line['blockId'] is None else True if line['isMisleading'] is True else False})
 
         return data
 

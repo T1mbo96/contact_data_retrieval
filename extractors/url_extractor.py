@@ -1,4 +1,4 @@
-from extracting_tasks import RegExExtractingTask
+from extractors.extracting_tasks import RegExExtractingTask
 
 
 class URLExtractor(RegExExtractingTask):

@@ -1,8 +1,8 @@
-from extracting_tasks import RegExExtractingTask
+from extractors.extracting_tasks import RegExExtractingTask
 
 
 class VATNumberExtractor(RegExExtractingTask):
-    pattern = r'DE?[0-9]{9}'
+    pattern = r'DE?[-\s]?[0-9]{3}[-\s]?[0-9]{3}[-\s]?[0-9]{3}'
     type = 'vat'
 
 
