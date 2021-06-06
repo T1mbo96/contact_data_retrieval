@@ -168,16 +168,16 @@ class ContactDataRetrieval(PreProcessing):
     def _save_blocks(self, *args):
         assorted: List[Dict[str, Any]] = sorted(args[0], key=lambda k: k['index'])
 
-        with open('test1.json', 'w') as file:
+        with open('test8.json', 'w') as file:
             json.dump(assorted, file)
 
-        with open('test1.json', 'r') as file:
+        with open('test8.json', 'r') as file:
             lines = json.load(file)
 
     def _relevant(self) -> List[Dict[str, Any]]:
         # TODO: accept lines from pipeline
 
-        with open('test1.json', 'r') as file:
+        with open('test8.json', 'r') as file:
             entities = json.load(file)
 
         print('entities')
@@ -394,10 +394,10 @@ class ContactDataRetrieval(PreProcessing):
 
 
 if __name__ == '__main__':
-    # test = 1200, test1 = 1481, test2 = 876, test3 = 538, test4 = 564, test5 = 187, test6 = 231, test7 = 347
+    # test = 1200, test1 = 1481, test2 = 876, test3 = 538, test4 = 564, test5 = 187, test6 = 231, test7 = 347, test8 = 1862
     dl = DataLoader('data/imprints_plausible_v2.json')
-    print(dl.contact_data(index=1481))
-    cdr = ContactDataRetrieval(contact_data=dl.contact_data(index=1481), filters=['e_mails', 'human_names', 'locations', 'phone_numbers', 'organizations', 'phone_numbers', 'vat_numbers'])
+    print(dl.contact_data(index=1862))
+    cdr = ContactDataRetrieval(contact_data=dl.contact_data(index=1862), filters=['e_mails', 'human_names', 'locations', 'phone_numbers', 'organizations', 'phone_numbers', 'vat_numbers'])
     #cdr = ContactDataRetrieval(contact_data=dl.contact_data(index=347), filters=[])
     cdr.blocks()
     # TODO: for organization use probablepeople to split in name and type (e.g. cubewerk and GmbH), use only name for main organization but concatenate in final contact data
